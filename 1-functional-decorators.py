@@ -1,7 +1,7 @@
 from functools import wraps
 
 def logger(func):
-    @wraps(func)
+    @wraps(func) # Copies the metadata of func into logger
     def wrapper(*args, **kwargs):
         j = 0
         for i, arg in enumerate(args):
