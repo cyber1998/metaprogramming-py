@@ -4,7 +4,19 @@ POSTFIX = "+++"
 INCOMPATIBLE_DATATYPE_ERR = "{} Incompatible datatype detected: {} of type {}"
 UNSUPPORTED_DATATYPE = "{} Iterables and other datastructures are not supported"
 
-def typechecker(func=None, *, postfix=""):
+def typechecker(func=None,*,postfix=""):
+    """
+    This function is a simple typechecker which disallows operations of different datatypes,
+    and only allows operations on primitive datatypes.
+
+    Args:
+        func (Function, optional): The func to which this decorator is going to be applied. Defaults to None.
+        postfix (str, optional): The postfix of the error message that is going to be returned. Defaults to "".
+
+    Returns:
+        str: In case of an error
+        Result of func(): In case it passes
+    """
     if func is None:
         return partial(typechecker, postfix=postfix)
     @wraps(func)
@@ -40,6 +52,3 @@ assert add(1, [2]) == INCOMPATIBLE_DATATYPE_ERR.format(POSTFIX, [2], list)
 
 # Fails (Unsupported datatypes)
 assert add([1], [2]) == UNSUPPORTED_DATATYPE.format(POSTFIX)
-
-
-
