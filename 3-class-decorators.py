@@ -49,5 +49,5 @@ class Employer(BaseEntity):
     pass
 
 
-cyber = Employee(1, "Cyber", None)
-# print(cyber.department)
+cyber = Employee(1, "Cyber", "Computer Science")  # works
+rebyc = Employee(2, "Rebyc", None)  # throws error
