@@ -1,14 +1,14 @@
-from functools import wraps
+from exceptions import MetaException
 
 
 def required(cls):
     original_setattr = cls.__setattr__
+
     def __setattr__(self, name, value):
-        print(name, value)
         if value == None:
-            return "Value cannot be none"
+            raise MetaException(f'{name} cannot be None')
         return original_setattr(self, name, value)
-    cls.__setattr__ = __setattr__  
+    cls.__setattr__ = __setattr__
     return cls
 
 
@@ -18,8 +18,8 @@ class RequiredFields(type):
         class_object = required(class_object)
         return class_object
 
-@required
-class BaseEntity:
+
+class BaseEntity(metaclass=RequiredFields):
 
     def __init__(self, id, name, department):
         self.id = id,
@@ -40,13 +40,14 @@ class BaseEntity:
 #         self.name = name
 #         self.department = department
 
-@required
+
 class Employee(BaseEntity):
     pass
 
-@required
+
 class Employer(BaseEntity):
     pass
+
 
 cyber = Employee(1, "Cyber", None)
 # print(cyber.department)
